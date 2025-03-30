@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BNB Betting Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            text-align: center;
+            padding: 20px;
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            max-width: 400px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+            color: black;
+        }
+        input, button {
+            margin: 10px;
+            padding: 12px;
+            width: 80%;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+        input {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #ccc;
+            transition: 0.3s;
+        }
+        input:focus {
+            border-color: #4facfe;
+            outline: none;
+            box-shadow: 0 0 5px rgba(79, 172, 254, 0.8);
+        }
+        button {
+            background: linear-gradient(to right, #28a745, #218838);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: linear-gradient(to right, #218838, #1e7e34);
+            transform: scale(1.05);
+        }
+        .result {
+            margin-top: 15px;
+            font-weight: bold;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+            color: black;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>BNB Betting Calculator</h2>
+        <label>Team 1 Odds:</label>
+        <input type="number" id="team1Odds" placeholder="Enter team 1 odds" step="0.01">
+        
+        <label>Team 2 Odds:</label>
+        <input type="number" id="team2Odds" placeholder="Enter team 2 odds" step="0.01">
+        
+        <label>BNB to INR Rate:</label>
+        <input type="number" id="bnbToInr" placeholder="Enter BNB to INR rate" step="0.01">
+        
+        <label>Desired Output Amount in INR:</label>
+        <input type="number" id="desiredInr" placeholder="Enter desired output in INR" step="0.01">
+        
+        <button onclick="calculateBetAmounts()">Calculate</button>
+        
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculateBetAmounts() {
+            let team1Odds = parseFloat(document.getElementById('team1Odds').value);
+            let team2Odds = parseFloat(document.getElementById('team2Odds').value);
+            let bnbToInr = parseFloat(document.getElementById('bnbToInr').value);
+            let desiredInr = parseFloat(document.getElementById('desiredInr').value);
+            
+            if (isNaN(team1Odds) || isNaN(team2Odds) || isNaN(bnbToInr) || isNaN(desiredInr)) {
+                document.getElementById('result').innerHTML = "Please enter valid inputs.";
+                return;
+            }
+            
+            let desiredBnb = desiredInr / bnbToInr;
+            let betAmountTeam1 = desiredBnb / team1Odds;
+            let betAmountTeam2 = desiredBnb / team2Odds;
+            
+            document.getElementById('result').innerHTML = `
+                Bet on Team 1: ${betAmountTeam1.toFixed(6)} BNB<br>
+                Bet on Team 2: ${betAmountTeam2.toFixed(6)} BNB
+            `;
+        }
+    </script>
+</body>
+</html>
